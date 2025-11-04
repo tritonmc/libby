@@ -238,6 +238,15 @@ public abstract class LibraryManager {
     }
 
     /**
+     * Set a custom relocator instead of using the default one that downloads Lucko's jar-relocator.
+     *
+     * @param relocator a relocation helper instance
+     */
+    public void setRelocator(RelocationHelper relocator) {
+        this.relocator = relocator;
+    }
+
+    /**
      * Gets all of the possible download URLs for this library. Entries are
      * ordered by direct download URLs first and then repository download URLs.
      * <br>This method also resolves SNAPSHOT artifacts URLs.
@@ -548,9 +557,11 @@ public abstract class LibraryManager {
         Path tmpOut = file.resolveSibling(file.getFileName() + ".tmp");
         tmpOut.toFile().deleteOnExit();
 
-        synchronized (this) {
-            if (relocator == null) {
-                relocator = new RelocationHelper(this);
+        if (relocator == null) {
+            synchronized (this) {
+                if (relocator == null) {
+                    relocator = new RelocationHelper(this);
+                }
             }
         }
 
