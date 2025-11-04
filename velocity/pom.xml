@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.byteflux</groupId>
+        <groupId>com.rexcantor64</groupId>
         <artifactId>libby</artifactId>
         <version>1.3.1</version> 
     </parent>
@@ -21,7 +21,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.byteflux</groupId>
+            <groupId>com.rexcantor64</groupId>
             <artifactId>libby-core</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -43,7 +43,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Automatic-Module-Name>net.byteflux.libby.velocity</Automatic-Module-Name>
+                            <Automatic-Module-Name>com.rexcantor64.libby.velocity</Automatic-Module-Name>
                         </manifestEntries>
                     </archive>
                 </configuration>

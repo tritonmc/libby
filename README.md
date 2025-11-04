@@ -1,10 +1,10 @@
-# Libby (AlessioDP)
+# Libby (TritonMC)
+
+This is a fork of [AlessioDP/libby](https://github.com/AlessioDP/libby) for use in [Triton](https://triton.rexcantor64.com).
+
+The group id has been changed to `com.rexcantor64`, but the package remains as `net.byteflux`.
 
 ## [Changes in this fork](./CHANGELOG.md)
-
-## 2.0.0 Beta
-
-A beta version of the 2.0.0 update is available on the `gradle` branch, with many changes and improvements. [Try it out!](https://github.com/AlessioDP/libby/tree/gradle#usage)
 
 # Libby
 
@@ -30,16 +30,16 @@ who self-host their plugins on servers with limited bandwidth.
 
 Firstly, add the maven artifact to your `pom.xml`
 ```xml
-<!-- Libby (AlessioDP) Repository -->
+<!-- Libby (TritonMC) Repository -->
 <repository>
   <id>AlessioDP</id>
-  <url>https://repo.alessiodp.com/releases/</url>
+  <url>https://repo.diogotc.com/releases/</url>
 </repository>
 
 <dependency>
-    <groupId>net.byteflux</groupId>
+    <groupId>com.rexcantor64</groupId>
     <artifactId>libby-bukkit</artifactId> <!-- Replace bukkit if you're using another platform -->
-    <version>1.3.1</version>
+    <version>2.0.0</version>
 </dependency>
 ``` 
 
