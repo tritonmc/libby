@@ -2,6 +2,9 @@ package net.byteflux.libby;
 
 import net.byteflux.libby.relocation.Relocation;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
@@ -151,7 +154,7 @@ public class Library {
         this.path = path + ".jar";
 
         this.repositories = repositories != null ? Collections.unmodifiableList(new LinkedList<>(repositories)) : Collections.emptyList();
-        relocatedPath = hasRelocations() ? path + "-relocated.jar" : null;
+        this.relocatedPath = buildRelocatedPath(path);
         this.isolatedLoad = isolatedLoad;
     }
 
@@ -284,7 +287,7 @@ public class Library {
     /**
      * Gets the relative path to this library's relocated jar.
      *
-     * @return path to relocated artifact or null if has no relocations
+     * @return path to relocated artifact or null if it has no relocations
      */
     public String getRelocatedPath() {
         return relocatedPath;
@@ -321,6 +324,35 @@ public class Library {
         }
 
         return name;
+    }
+
+    private String buildRelocatedPath(String path) {
+        if (!hasRelocations()) {
+            return null;
+        }
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            digest.update((byte) this.relocations.size());
+            for (Relocation relocation: this.relocations) {
+                digest.update(relocation.getPattern().getBytes(StandardCharsets.UTF_8));
+                digest.update(relocation.getRelocatedPattern().getBytes(StandardCharsets.UTF_8));
+                digest.update((byte) relocation.getIncludes().size());
+                for (String includes : relocation.getIncludes()) {
+                    digest.update(includes.getBytes(StandardCharsets.UTF_8));
+                }
+                digest.update((byte) relocation.getExcludes().size());
+                for (String excludes : relocation.getExcludes()) {
+                    digest.update(excludes.getBytes(StandardCharsets.UTF_8));
+                }
+            }
+
+            String hash = new String(Base64.getUrlEncoder().encode(digest.digest()), StandardCharsets.UTF_8);
+            return path + "-relocated-" + hash + ".jar";
+        } catch (NoSuchAlgorithmException e) {
+            return path + "-relocated.jar";
+        }
     }
 
     /**

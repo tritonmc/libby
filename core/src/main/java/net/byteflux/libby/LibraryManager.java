@@ -6,6 +6,7 @@ import net.byteflux.libby.logging.Logger;
 import net.byteflux.libby.logging.adapters.LogAdapter;
 import net.byteflux.libby.relocation.Relocation;
 import net.byteflux.libby.relocation.RelocationHelper;
+import net.byteflux.libby.relocation.RelocationHelperImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -560,7 +561,7 @@ public abstract class LibraryManager {
         if (relocator == null) {
             synchronized (this) {
                 if (relocator == null) {
-                    relocator = new RelocationHelper(this);
+                    relocator = new RelocationHelperImpl(this);
                 }
             }
         }
