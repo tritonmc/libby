@@ -1,3 +1,13 @@
+### Version 2.0.0
+
+* Changed groupId to `com.rexcantor64`
+* Added a way to override the relocation function in LibraryManager
+* Ensure relocated JARs are always up-to-date by including the hash of the relocating rules in the resulting file name
+
+---
+
+All releases below were made before the fork by TritonMC.
+
 ###  Version 1.3.1
 *  Support relocation of libraries compiled for Java up to 23
 *  Updated libraries used by Libby
