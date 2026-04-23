@@ -41,10 +41,10 @@ public class Relocation {
      * @param excludes         classes and resources to exclude
      */
     public Relocation(String pattern, String relocatedPattern, Collection<String> includes, Collection<String> excludes) {
-        this.pattern = requireNonNull(pattern, "pattern").replace("{}", ".");
-        this.relocatedPattern = requireNonNull(relocatedPattern, "relocatedPattern").replace("{}", ".");
-        this.includes = includes != null ? Collections.unmodifiableList(new LinkedList<>(includes)) : Collections.emptyList();
-        this.excludes = excludes != null ? Collections.unmodifiableList(new LinkedList<>(excludes)) : Collections.emptyList();
+        this.pattern = normalizePattern(requireNonNull(pattern, "pattern"));
+        this.relocatedPattern = normalizePattern(requireNonNull(relocatedPattern, "relocatedPattern"));
+        this.includes = normalizePatternCollection(includes);
+        this.excludes = normalizePatternCollection(excludes);
     }
 
     /**
@@ -91,6 +91,17 @@ public class Relocation {
      */
     public Collection<String> getExcludes() {
         return excludes;
+    }
+
+    private String normalizePattern(String pattern) {
+        return pattern.replace("{}", ".");
+    }
+
+    private Collection<String> normalizePatternCollection(Collection<String> patterns) {
+        if (patterns == null) {
+            return Collections.emptyList();
+        }
+        return patterns.stream().map(this::normalizePattern).toList();
     }
 
     /**
